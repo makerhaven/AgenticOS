@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose a new surface or capability
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What should the OS do? Which screen does it live on?
+    validations:
+      required: true
+  - type: textarea
+    id: tokens
+    attributes:
+      label: Token cost
+      description: Does it call an LLM? Which tier should handle it (0 free/local, 1 budget, 2 premium)? How is context kept small?
+  - type: checkboxes
+    id: localfirst
+    attributes:
+      label: Local-first check
+      options:
+        - label: "Works without external API keys (or degrades gracefully)"
