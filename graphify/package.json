@@ -1,0 +1,13 @@
+{
+  "name": "graphify",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Graph engine for the Agentic OS memory layer — walks the Obsidian vault, serves the galaxy projection.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0"
+  }
+}
