@@ -1,0 +1,51 @@
+# Agentic OS + Graphify — two containers, one shared brain.
+# The Obsidian vault lives on the HOST at /srv/agentic-os/vault and is
+# bind-mounted into both: rw for agents, read-only for the graph engine.
+
+services:
+  agentic-os:
+    build: .
+    container_name: agentic-os
+    ports:
+      - "127.0.0.1:3737:3737"        # bound to localhost; OpenLiteSpeed proxies /control here
+    environment:
+      VAULT_PATH: /vault
+      GRAPHIFY_URL: http://graphify:4747
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      CONTROL_PASSCODE: ${CONTROL_PASSCODE:-}
+      MAX_CONCURRENT_RUNS: "3"
+    volumes:
+      - /srv/agentic-os/vault:/vault          # rw — agents write memory here
+      - agentic-data:/app/data                # kanban, goals, sessions, token ledger
+      - agentic-workspaces:/app/workspaces    # agent scratch + outputs
+    depends_on:
+      graphify:
+        condition: service_started
+    networks: [agentic-net]
+    restart: unless-stopped
+    mem_limit: 2g
+    cpus: 2.0
+
+  graphify:
+    build: ./graphify
+    container_name: graphify
+    expose:
+      - "4747"                                # internal only — never published to the host
+    environment:
+      VAULT_PATH: /vault
+    volumes:
+      - /srv/agentic-os/vault:/vault:ro       # ro — the graph can never corrupt memory
+    networks: [agentic-net]
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1.0
+
+networks:
+  agentic-net:
+    driver: bridge
+
+volumes:
+  agentic-data:
+  agentic-workspaces:
