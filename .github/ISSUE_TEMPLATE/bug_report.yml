@@ -1,0 +1,39 @@
+name: Bug report
+description: Something in the OS misbehaved
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: screen
+    attributes:
+      label: Which screen / surface
+      options:
+        - Mission Control
+        - Agent panel (chat / workspace / control room)
+        - Kanban
+        - Goal Mode
+        - Memory / Galaxy
+        - SEO pipeline
+        - Studio
+        - Mastermind
+        - Settings / deployment
+        - Other
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Console errors, pm2 logs, screenshots. Redact secrets.
+      render: text
+  - type: checkboxes
+    id: mock
+    attributes:
+      label: Reproduces on the mock adapter (no API keys)?
+      options:
+        - label: "Yes — reproducible with zero keys configured"
