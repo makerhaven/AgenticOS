@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  /* Midnight-aubergine observatory palette (from agentos.guide) */
+  --color-bg-deep: #15101a;
+  --color-bg-mid: #1c1622;
+  --color-bg-card: #251d2c;
+  --color-bg-elev: #2e2436;
+
+  --color-cream: #f3ebda;
+  --color-cream-soft: #ddd0bb;
+  --color-cream-dim: #a59783;
+  --color-cream-mute: #6e6353;
+
+  --color-gold: #d4a574;
+  --color-gold-soft: #e6c69a;
+  --color-gold-deep: #a87f54;
+
+  --color-emerald: #5ab896;
+  --color-emerald-dim: #3a8a6e;
+  --color-plum: #c4607e;
+  --color-rust: #c97c5e;
+
+  --color-line: rgba(212, 165, 116, 0.2);
+  --color-line-soft: rgba(243, 235, 218, 0.08);
+
+  --font-display: "Bricolage Grotesque", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-hand: "Caveat", cursive;
+
+  --shadow-card: 0 1px 0 rgba(243, 235, 218, 0.03), 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 2px 0 rgba(243, 235, 218, 0.04), 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background: var(--color-bg-deep);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Fractal-noise texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.9  0 0 0 0 0.85  0 0 0 0.035 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+}
+
+/* Three radial ambient glows */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 65% 45% at 12% 6%, rgba(212, 165, 116, 0.09), transparent 60%),
+    radial-gradient(ellipse 55% 40% at 88% 22%, rgba(201, 124, 94, 0.07), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 95%, rgba(196, 96, 126, 0.06), transparent 60%);
+}
+
+#__next,
+.app-root {
+  position: relative;
+  z-index: 2;
+}
+
+::selection {
+  background: rgba(212, 165, 116, 0.3);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-elev);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-deep);
+}
